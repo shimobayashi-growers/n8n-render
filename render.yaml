@@ -6,6 +6,7 @@
 # `plan`) for both the web service and the database. You
 # can upgrade to paid instance types at any time to
 # increase resources.
+
 services:
   - type: web
     plan: free
@@ -16,13 +17,7 @@ services:
     image:
       # Pulls the n8n image tagged as latest from Docker Hub
       url: docker.io/n8nio/n8n:latest
-    
-    # ↓ Diskを追加（コミュニティノード永続化用）
-    disk:
-      name: n8n-data
-      mountPath: /home/node/.n8n
-      sizeGB: 1
-    
+
     # All environment variables defined below are required!
     #
     # You can define additional environment variables as needed.
@@ -35,6 +30,7 @@ services:
       # encrypted with the previous value.
       - key: N8N_ENCRYPTION_KEY
         generateValue: true
+
       # These automatically populate connection details 
       # for the Render Postgres database defined below
       - key: DB_TYPE
@@ -55,9 +51,6 @@ services:
         fromDatabase:
           name: n8n-db
           property: user
-      # ↓ コミュニティノードをAI Agentで使用可能にする
-      - key: N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE
-        value: "true"
 
 databases:
   - name: n8n-db
